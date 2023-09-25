@@ -1,37 +1,34 @@
 import pygame
+import settings
+import entities
+import images
+import random
+from ball import Ball
 
-
+GAME_WIDTH = settings.SCREEN_WIDTH
+GAME_HEIGHT = settings.SCREEN_HEIGHT
 
 def update():
-    global circle_velocity
-    global circle_position
-    
-    if circle_follow_mouse:
-        mouse_pos_vec = pygame.Vector2(mouse_position[0], mouse_position[1])
-        diff_vec = mouse_pos_vec - circle_position
-        normalized_direction = pygame.Vector2.normalize(diff_vec)
-        circle_velocity += normalized_direction * 1000 * delta_time
-        
-    circle_position += circle_velocity * delta_time
-    
+    entities.update_balls()
+
+def random_tuple():
+    return random.random() * 2.0 - 1.0, random.random() * 2.0 - 1.0
+
 def draw():
-    screen.fill((50, 50, 50))
-    pygame.draw.circle(screen, (100, 200, 100), circle_position, 10)
+    settings.screen.fill((50, 50, 50))
+    entities.draw_balls()
 
 pygame.init()
 
-screen = pygame.display.set_mode((640, 460))
+settings.screen = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
 
 game_running = True
 delta_time = 0.0
 clock = pygame.time.Clock()
 
-circle_position = pygame.Vector2(0, 0)
-circle_velocity = pygame.Vector2(0, 0)
-circle_follow_mouse = False
-
 mouse_position = (0, 0)
 while game_running:
+
     mouse_position = pygame.mouse.get_pos()
     
     for event in pygame.event.get():
@@ -41,18 +38,21 @@ while game_running:
             if event.key == pygame.K_ESCAPE:
                 game_running = False
             elif event.key == pygame.K_SPACE:
-                circle_follow_mouse = True
+                circle_follow_mouse = False
+                circle_falling = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 circle_follow_mouse = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == pygame.BUTTON_LEFT:
+                print("spawn")
+                entities.balls.append(Ball(pygame.Vector2(event.pos[0], event.pos[1]), pygame.Vector2((random.random() * 200 - 1.0, random.random() * 200 - 1.0))))
                 
     update()
     draw()
     
     pygame.display.flip()
     
-    print("loop" + str(delta_time))
-
-    delta_time = 0.001 * clock.tick(60)
+    settings.delta_time = 0.001 * clock.tick(60)
     
     pygame.quit
