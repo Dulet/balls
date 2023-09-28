@@ -22,13 +22,14 @@ def random_tuple():
     return random.random() * 2.0 - 1.0, random.random() * 2.0 - 1.0
 
 def draw():
-    settings.screen.fill((50, 50, 50))
+    settings.screen.blit(images.background, (0, 0))
     entities.draw_balls()
     entities.draw_pegs()
 
 pygame.init()
 
 settings.screen = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
+
 
 game_running = True
 delta_time = 0.0
