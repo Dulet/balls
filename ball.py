@@ -2,6 +2,7 @@ import images
 import pygame
 import settings
 
+from pygame.sprite import Sprite
 from enum import Enum
 from pygame.locals import *
 
@@ -9,7 +10,7 @@ from pygame.locals import *
 class BallType(Enum):
     DEFAULT = 0
     
-class Ball:
+class Ball(Sprite):
     def __init__(self, position: pygame.Vector2, velocity: pygame.Vector2 = pygame.Vector2(0, 0), 
                  radius = 8.0, ball_type = BallType.DEFAULT, image: pygame.Surface = None):
         
@@ -31,7 +32,6 @@ class Ball:
     def update(self):
         self.velocity.y += settings.delta_time * settings.gravity
         self.position += self.velocity * settings.delta_time
-        print(self.velocity, settings.delta_time)
         
         self.check_screen_collisions()
 

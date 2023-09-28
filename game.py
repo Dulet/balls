@@ -4,12 +4,19 @@ import entities
 import images
 import random
 from ball import Ball
+from obstacle import Peg
 
 GAME_WIDTH = settings.SCREEN_WIDTH
 GAME_HEIGHT = settings.SCREEN_HEIGHT
 
+
+def create_balls():
+    if len(entities.pegs) < 20:
+        entities.pegs.append(Peg((random.randint(100, 540), random.randint(600, 920))))
+    
 def update():
     entities.update_balls()
+    create_balls()
 
 def random_tuple():
     return random.random() * 2.0 - 1.0, random.random() * 2.0 - 1.0
@@ -17,6 +24,7 @@ def random_tuple():
 def draw():
     settings.screen.fill((50, 50, 50))
     entities.draw_balls()
+    entities.draw_pegs()
 
 pygame.init()
 
@@ -46,12 +54,12 @@ while game_running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == pygame.BUTTON_LEFT:
                 print("spawn")
-                entities.balls.append(Ball(pygame.Vector2(event.pos[0], event.pos[1]), pygame.Vector2((random.random() * 200 - 1.0, random.random() * 200 - 1.0))))
+                entities.balls.append(Ball(pygame.Vector2(event.pos[0], event.pos[1]), pygame.Vector2((random.random() , random.random() ))))
                 
     update()
     draw()
-    
     pygame.display.flip()
+    pygame.display.update()
     
     settings.delta_time = 0.001 * clock.tick(60)
     
