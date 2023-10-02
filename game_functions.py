@@ -8,7 +8,7 @@ from obstacle import Peg
 
 def create_balls():
     if len(entities.pegs) < 20:
-        entities.pegs.append(Peg((random.randint(100, 540), random.randint(600, 920))))
+        entities.pegs.append(Peg(pygame.Vector2(random.randint(200, 400), random.randint(200, 400)), pygame.Vector2(5, 5)))
 
 def update():
     entities.update_balls()

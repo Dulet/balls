@@ -16,3 +16,4 @@ def draw_balls():
 def draw_pegs():
     for i in range(len(pegs)):
         pegs[i].draw()
+        pegs[i].update()

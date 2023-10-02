@@ -34,7 +34,7 @@ while game_running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == pygame.BUTTON_LEFT:
                 print("spawn")
-                entities.balls.append(Ball(pygame.Vector2(event.pos[0], event.pos[1]), pygame.Vector2((random.random() , random.random() ))))
+                entities.balls.append(Ball(pygame.Vector2(event.pos[0], event.pos[1]), pygame.Vector2(((random.random()*2 - 1)*200, random.random()*200))))
                 
     f.update()
     f.draw()
